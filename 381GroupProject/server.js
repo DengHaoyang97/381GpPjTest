@@ -142,7 +142,7 @@ app.get('/', async(req, res) => {
     try {   
 	await awmongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
 	console.log('list books');
-        const books = await Book.find();
+	    const books= await Book.find();;
         res.render('index', { books: books });
 	await mongoose.disconnect();	
 	    
