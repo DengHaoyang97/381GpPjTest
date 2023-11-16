@@ -140,11 +140,11 @@ app.post('/createaccount', async(req, res) => {
 app.get('/', async(req, res) => {
     if (req.session.dbid) {
     try {   
-	awmongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
+	await awmongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
 	console.log('list books');
         const books = await Book.find();
         res.render('index', { books: books });
-	mongoose.disconnect();	
+	await mongoose.disconnect();	
 	    
     } catch (err) {
         res.status(500).send('Connot connect to DB');
