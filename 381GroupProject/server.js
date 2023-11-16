@@ -17,6 +17,7 @@
 //names
 const collectionName_user = 'user';  //login/create
 const uri = `mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`;
+const uri2 = `mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`;
 //names
 
 //quotes
@@ -48,6 +49,7 @@ app.use(session({
     year: Number
 });
 const Book = mongoose.model('books', bookSchema);
+mongoose.connect(uri2);	
 //books/
 
 //functions
@@ -137,22 +139,20 @@ app.post('/createaccount', async(req, res) => {
   });
  
  //mainpage
-app.get('/', async(req, res) => {
-    if (req.session.dbid) {
-    try {   
-	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
-	console.log('list books');
-	    const books= await mongoose.connection.Book.find();
-        res.render('index', { books: books });
+app.get('/', async (req, res) => {
+	 //check if login
+	if (!req.session.loggedIn) {
+	res.redirect('/login');} ;
 	
-	    
+    try {
+		console.log('list books');
+        const books = await Book.find();
+        res.render('index', { books: books });
     } catch (err) {
         res.status(500).send('Connot connect to DB');
 		console.log('Connot connect to DB');
     }
-	    finally{await mongoose.disconnect();}
-  } else {console.log("偷看人家~plz Don't peep badbad");
-    res.redirect('/login');}});   
+});  
 //main page
   
  //handle books
