@@ -140,7 +140,7 @@ app.post('/createaccount', async(req, res) => {
 app.get('/', async(req, res) => {
     if (req.session.dbid) {
     try {   
-	await awmongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
+	await awmongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
 	console.log('list books');
         const books = await Book.find();
         res.render('index', { books: books });
@@ -167,7 +167,7 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
+	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);	
         const book = await Book.findById(req.params.id);
         res.render('edit', { book: book });
 	await mongoose.disconnect();	
@@ -179,7 +179,7 @@ app.get('/books/edit/:id', async (req, res) => {
 
 app.post('/books/add', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
+	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
 	console.log('insertone');
         const newBook = new mongoose.connection.Book(req.body);
         await newBook.save();
@@ -195,7 +195,7 @@ app.post('/books/add', async (req, res) => {
 
 app.post('/books/update/:id', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
+	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);	
         await mongoose.connection.Book.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
 	await mongoose.disconnect();	
@@ -208,7 +208,7 @@ app.post('/books/update/:id', async (req, res) => {
 app.post('/books/delete/:id', async (req, res) => {
     try {
 	    
-       await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
+       await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
         await mongoose.connection.Book.findByIdAndDelete(req.params.id);
         res.redirect('/');
        await mongoose.disconnect();	
