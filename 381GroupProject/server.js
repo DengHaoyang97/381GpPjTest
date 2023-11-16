@@ -140,7 +140,7 @@ app.post('/createaccount', async(req, res) => {
 app.get('/', async(req, res) => {
     if (req.session.dbid) {
     try {   
-	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
+	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
 	console.log('list books');
 	    const books= await mongoose.connection.Book.find();
         res.render('index', { books: books });
