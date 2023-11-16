@@ -143,7 +143,7 @@ app.post('/createaccount', async(req, res) => {
 
  app.get('/', async (req, res) => {
 	 //check if login
-	if (!req.session.dbid) {
+	if (req.session.dbid==null) {
 	res.redirect('/login');} ;
 	
     try {
