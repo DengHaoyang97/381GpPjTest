@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Management System</title>
+</head>
+<body>
+    <h1>Book List:</h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+        <% books.forEach(book => { %>
+            <tr>
+                <td><%= book.title %></td>
+                <td><%= book.author %></td>
+                <td><%= book.year %></td>
+                <td>
+                    <a href="/books/edit/<%= book._id %>">Edit</a>
+                    <form action="/books/delete/<%= book._id %>" method="post" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+	<a href="/books/new">Add New</a><br>
+        <a href"/logout">Logout</a><br>
+</body>
+</html>

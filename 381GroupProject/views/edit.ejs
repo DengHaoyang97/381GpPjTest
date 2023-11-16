@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Book</title>
+</head>
+<body>
+    <h1>Edit Book</h1>
+    <form action="/books/update/<%= book._id %>" method="post">
+        <input type="text" name="title" value="<%= book.title %>" required>
+        <input type="text" name="author" value="<%= book.author %>" required>
+        <input type="number" name="year" value="<%= book.year %>" required>
+        <button type="submit">Update Book</button>
+    </form>
+<div>   
+    <a href='/'>back</a><br>
+    <a href='/logout'>Logout</a>
+</div>
+</body>
+
+</html>
