@@ -139,10 +139,13 @@ app.post('/createaccount', async(req, res) => {
  //mainpage
 app.get('/', async(req, res) => {
     if (req.session.dbid) {
-    try {
-		console.log('list books');
+    try {   
+	await openDB();
+	console.log('list books');
         const books = await Book.find();
         res.render('index', { books: books });
+	await closeDB();
+	    
     } catch (err) {
         res.status(500).send('Connot connect to DB');
 		console.log('Connot connect to DB');
@@ -164,8 +167,10 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
+	await openDB();  
         const book = await Book.findById(req.params.id);
         res.render('edit', { book: book });
+	await closeDB();
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -174,10 +179,12 @@ app.get('/books/edit/:id', async (req, res) => {
 
 app.post('/books/add', async (req, res) => {
     try {
-		console.log('insertone');
-        const newBook = new Book(req.body);
+	await openDB();	
+	console.log('insertone');
+        const newBook = new mongoose.connection.Book(req.body);
         await newBook.save();
 		console.log('inserted book with id: ' + newBook._id);
+	await closeDB();
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
@@ -187,8 +194,10 @@ app.post('/books/add', async (req, res) => {
 
 app.post('/books/update/:id', async (req, res) => {
     try {
-        await Book.findByIdAndUpdate(req.params.id, req.body);
+	await openDB();	
+        await mongoose.connection.Book.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
+	await closeDB();
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -197,8 +206,11 @@ app.post('/books/update/:id', async (req, res) => {
 
 app.post('/books/delete/:id', async (req, res) => {
     try {
-        await Book.findByIdAndDelete(req.params.id);
+	    
+        await openDB();	
+        await mongoose.connection.Book.findByIdAndDelete(req.params.id);
         res.redirect('/');
+        await closeDB();
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
