@@ -140,7 +140,7 @@ app.post('/createaccount', async(req, res) => {
 app.get('/', async(req, res) => {
     if (req.session.dbid) {
     try {   
-	awmongoose.connect(uri);
+	awmongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
 	console.log('list books');
         const books = await Book.find();
         res.render('index', { books: books });
@@ -167,7 +167,7 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
-	mongoose.connect(uri);	
+	mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
         const book = await Book.findById(req.params.id);
         res.render('edit', { book: book });
 	mongoose.disconnect();	
@@ -179,7 +179,7 @@ app.get('/books/edit/:id', async (req, res) => {
 
 app.post('/books/add', async (req, res) => {
     try {
-	mongoose.connect(uri);
+	mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
 	console.log('insertone');
         const newBook = new mongoose.connection.Book(req.body);
         await newBook.save();
@@ -194,7 +194,7 @@ app.post('/books/add', async (req, res) => {
 
 app.post('/books/update/:id', async (req, res) => {
     try {
-	mongoose.connect(uri);	
+	mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
         await mongoose.connection.Book.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
 	mongoose.disconnect();	
@@ -207,7 +207,7 @@ app.post('/books/update/:id', async (req, res) => {
 app.post('/books/delete/:id', async (req, res) => {
     try {
 	    
-        mongoose.connect(uri);
+        mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);
         await mongoose.connection.Book.findByIdAndDelete(req.params.id);
         res.redirect('/');
         mongoose.disconnect();	
