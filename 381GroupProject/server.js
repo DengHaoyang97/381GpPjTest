@@ -167,10 +167,10 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
-	mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
+	await mongoose.connect(`mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`);	
         const book = await Book.findById(req.params.id);
         res.render('edit', { book: book });
-	mongoose.disconnect();	
+	await mongoose.disconnect();	
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
