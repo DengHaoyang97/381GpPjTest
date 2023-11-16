@@ -214,10 +214,6 @@ app.listen(process.env.PORT || 3000);
     }
 });
   
-  
-//end
-app.listen(process.env.PORT || 3000);
-
    
 
 
