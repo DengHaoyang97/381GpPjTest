@@ -138,10 +138,12 @@ app.post('/createaccount', async(req, res) => {
   res.redirect('/login');
   });
  
- //mainpage
-app.get('/', async (req, res) => {
+  
+ //handle books
+
+ app.get('/', async (req, res) => {
 	 //check if login
-	if (!req.session.loggedIn) {
+	if (!req.session.dbid) {
 	res.redirect('/login');} ;
 	
     try {
@@ -152,10 +154,7 @@ app.get('/', async (req, res) => {
         res.status(500).send('Connot connect to DB');
 		console.log('Connot connect to DB');
     }
-});  
-//main page
-  
- //handle books
+});
 
 app.get('/books/new', async (req, res) => {
     try {
@@ -168,10 +167,8 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);	
         const book = await Book.findById(req.params.id);
         res.render('edit', { book: book });
-	await mongoose.disconnect();	
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -180,14 +177,11 @@ app.get('/books/edit/:id', async (req, res) => {
 
 app.post('/books/add', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
-	console.log('insertone');
-        const newBook = new mongoose.connection.Book(req.body);
+		console.log('insertone');
+        const newBook = new Book(req.body);
         await newBook.save();
 		console.log('inserted book with id: ' + newBook._id);
-	await mongoose.disconnect();
         res.redirect('/');
-	    
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -196,10 +190,8 @@ app.post('/books/add', async (req, res) => {
 
 app.post('/books/update/:id', async (req, res) => {
     try {
-	await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);	
-        await mongoose.connection.Book.findByIdAndUpdate(req.params.id, req.body);
+        await Book.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
-	await mongoose.disconnect();	
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -208,14 +200,17 @@ app.post('/books/update/:id', async (req, res) => {
 
 app.post('/books/delete/:id', async (req, res) => {
     try {
-	    
-       await mongoose.connect(`mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`);
-        await mongoose.connection.Book.findByIdAndDelete(req.params.id);
+        await Book.findByIdAndDelete(req.params.id);
         res.redirect('/');
-       await mongoose.disconnect();	
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
+    }
+});
+  
+  
+//end
+app.listen(process.env.PORT || 3000);
     }
 });
   
