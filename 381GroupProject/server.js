@@ -144,12 +144,13 @@ app.get('/', async(req, res) => {
 	console.log('list books');
 	    const books= await mongoose.connection.Book.find({});
         res.render('index', { books: books });
-	await mongoose.disconnect();	
+	
 	    
     } catch (err) {
         res.status(500).send('Connot connect to DB');
 		console.log('Connot connect to DB');
     }
+	    finally{await mongoose.disconnect();}
   } else {console.log("偷看人家~plz Don't peep badbad");
     res.redirect('/login');}});   
 //main page
