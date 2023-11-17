@@ -30,6 +30,12 @@ const app = express();
 const bodyParser=require('body-parser');
  app.use(bodyParser.urlencoded({ extended: true }));
 //quotes
+//bookSchema
+ const bookSchema = new mongoose.Schema({
+    title: String,
+    author: String,
+    year: Number
+});
 
 //shortcuts
 const closeDB=()=>mongoose.disconnect();	
