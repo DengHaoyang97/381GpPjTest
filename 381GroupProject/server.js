@@ -135,7 +135,7 @@ app.post('/login', async(req,res) => {
    const result=await handle_login(req,req.body.username,req.body.password);
    if(result && result.Message){ res.status(200).render('login.ejs',{Message:result.Message});}
    if(result==null){req.session.loggedIn = true;
-   res.redirect('/');}
+   return res.redirect('/');}
   
 });
 
