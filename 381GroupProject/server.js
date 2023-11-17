@@ -165,7 +165,7 @@ app.post('/createaccount', async(req, res) => {
     try {
 	   await openDB();
 	console.log('list books');
-        const books = await db.collection(Book).find();
+        const books = await db.Book.find();
         res.render('index', { books: books });
 	   
     } catch (err) {
