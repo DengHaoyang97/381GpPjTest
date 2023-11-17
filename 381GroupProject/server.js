@@ -139,15 +139,6 @@ app.post('/login', async(req,res) => {
   
 });
 
-app.get('/', (req, res) => {
-  if (req.session.loggedIn && req.session.dbid) {
-    res.status(200).render('testmainpage.ejs', { Message: null });
-    console.log(req.session.dbid)
-  } else {
-    console.log("坏坏哦偷看人家~");
-    res.redirect('/login');
-  }
-});
 
 app.get('/createaccount', (req, res) => {
    res.status(200).render('createaccount.ejs',{Message:null});   
@@ -160,6 +151,7 @@ app.post('/createaccount', async(req, res) => {
   app.get('/', async (req, res) => {
 	 //check if login
 	if (!req.session.id) {
+	console.log("坏坏哦偷看人家~");
 	res.redirect('/login');} ;
 	
     try {
