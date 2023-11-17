@@ -154,7 +154,7 @@ app.post('/createaccount', async(req, res) => {
 	
 	if (!req.session.dbid) {
 	console.log("坏坏哦偷看人家~");
-	res.redirect('/login');} ;
+	return res.redirect('/login');} ;
 	
     try {
 	   await openDB();
@@ -197,7 +197,7 @@ app.post('/books/add', async (req, res) => {
         const newBook = new Book(req.body);
         await db.newBook.save();
 		console.log('inserted book with id: ' + newBook._id);
-        res.redirect('/');
+       return res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -208,7 +208,7 @@ app.post('/books/update/:id', async (req, res) => {
     try {
 	await openDB();
         await db.collection(Book).findByIdAndUpdate(req.params.id, req.body);
-        res.redirect('/');
+        return res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
@@ -220,7 +220,7 @@ app.post('/books/delete/:id', async (req, res) => {
     try {
 	    await openDB();
         await db.collection(Book).findByIdAndDelete(req.params.id);
-        res.redirect('/');
+       return res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
