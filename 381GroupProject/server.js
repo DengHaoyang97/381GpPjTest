@@ -148,21 +148,27 @@ app.post('/createaccount', async(req, res) => {
     const result=await handle_accCreate(req.body.username,req.body.password);
     if(result && result.Message){ res.status(200).render('createaccount.ejs',{Message:result.Message});}
   });
+
+
   app.get('/', async (req, res) => {
-	 //check if login
+	
 	if (!req.session.id) {
 	console.log("坏坏哦偷看人家~");
 	res.redirect('/login');} ;
 	
     try {
-		console.log('list books');
-        const books = await Book.find();
+	   await openDB();
+	console.log('list books');
+        const books = await db.Book.find();
         res.render('index', { books: books });
+	   
     } catch (err) {
         res.status(500).send('Connot connect to DB');
 		console.log('Connot connect to DB');
     }
+	  finally{await closeDB();}
 });
+
 
 app.get('/books/new', async (req, res) => {
     try {
@@ -175,19 +181,21 @@ app.get('/books/new', async (req, res) => {
 
 app.get('/books/edit/:id', async (req, res) => {
     try {
-        const book = await Book.findById(req.params.id);
+	    await openDB();
+        const book = await db.Book.findById(req.params.id);
         res.render('edit', { book: book });
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
     }
+	 finally{await closeDB();}
 });
 
 app.post('/books/add', async (req, res) => {
     try {
 		console.log('insertone');
         const newBook = new Book(req.body);
-        await newBook.save();
+        await db.newBook.save();
 		console.log('inserted book with id: ' + newBook._id);
         res.redirect('/');
     } catch (err) {
@@ -198,22 +206,26 @@ app.post('/books/add', async (req, res) => {
 
 app.post('/books/update/:id', async (req, res) => {
     try {
-        await Book.findByIdAndUpdate(req.params.id, req.body);
+	await openDB();
+        await db.Book.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
     }
+	 finally{await closeDB();}
 });
 
 app.post('/books/delete/:id', async (req, res) => {
     try {
-        await Book.findByIdAndDelete(req.params.id);
+	    await openDB();
+        await db.Book.findByIdAndDelete(req.params.id);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
 		console.log('insert error or cannot connect db');
     }
+	 finally{await closeDB();}
 });
 
 app.listen(process.env.PORT || 8099);
