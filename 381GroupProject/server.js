@@ -159,7 +159,7 @@ app.post('/createaccount', async(req, res) => {
     try {
 	   await openDB();
 	console.log('list books');
-        const books = await db.Book.find();
+        const books = await db.collection(Book).find();
         res.render('index', { books: books });
 	   
     } catch (err) {
@@ -182,7 +182,7 @@ app.get('/books/new', async (req, res) => {
 app.get('/books/edit/:id', async (req, res) => {
     try {
 	    await openDB();
-        const book = await db.Book.findById(req.params.id);
+        const book = await db.collection(Book).findById(req.params.id);
         res.render('edit', { book: book });
     } catch (err) {
         res.status(500).send('Server error');
@@ -207,7 +207,7 @@ app.post('/books/add', async (req, res) => {
 app.post('/books/update/:id', async (req, res) => {
     try {
 	await openDB();
-        await db.Book.findByIdAndUpdate(req.params.id, req.body);
+        await db.collection(Book).findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
@@ -219,7 +219,7 @@ app.post('/books/update/:id', async (req, res) => {
 app.post('/books/delete/:id', async (req, res) => {
     try {
 	    await openDB();
-        await db.Book.findByIdAndDelete(req.params.id);
+        await db.collection(Book).findByIdAndDelete(req.params.id);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Server error');
