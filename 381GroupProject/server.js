@@ -18,7 +18,7 @@
 const collectionName_user = 'user';  //login/create
 
 const uri = `mongodb+srv://billydeng97:dhy97886886@cluster0.zsgzyzj.mongodb.net/381Project?retryWrites=true&w=majority`;
-const uri2 = `mongodb+srv://userfornode:12345678900@book-managementsystem.cqntnli.mongodb.net/BookManage`;
+
 //names
 
 //quotes
@@ -42,7 +42,7 @@ const closeDB=()=>mongoose.disconnect();
 const openDB=()=>mongoose.connect(uri);	
 const db=mongoose.connection;
 //shortcuts
-mongoose.connect(uri2);	
+	
 
 app.use(session({
   name: 'session',
