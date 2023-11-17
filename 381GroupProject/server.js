@@ -36,15 +36,14 @@ const bodyParser=require('body-parser');
     author: String,
     year: Number
 });
+const Book = mongoose.model('books', bookSchema);
 
 //shortcuts
 const closeDB=()=>mongoose.disconnect();	
 const openDB=()=>mongoose.connect(uri);	
 const db=mongoose.connection;
 //shortcuts
-	
-
-app.use(session({
+  app.use(session({
   name: 'session',
   keys: ['aaa','bbb'],
 }));//checked
