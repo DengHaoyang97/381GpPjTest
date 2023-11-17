@@ -152,7 +152,7 @@ app.post('/createaccount', async(req, res) => {
 
   app.get('/', async (req, res) => {
 	
-	if (!req.session.id) {
+	if (!req.session.dbid) {
 	console.log("坏坏哦偷看人家~");
 	res.redirect('/login');} ;
 	
